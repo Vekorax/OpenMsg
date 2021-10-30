@@ -97,7 +97,11 @@ public class Connection extends Thread {
 
     private void askAwaitingMessage() {
         if (Server.awaitingMessages.containsKey(name)) {
-            List<String>
+            sendMessage("start");
+            Server.awaitingMessages.get(name).forEach(msg -> {
+                sendMessage(msg);
+            });
+            sendMessage("end");
         }
     }
 }
