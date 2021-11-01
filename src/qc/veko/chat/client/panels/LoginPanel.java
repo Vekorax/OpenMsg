@@ -18,13 +18,14 @@ public class LoginPanel extends EasyPanel {
         setLayout(null);
         setBackGroundImage("/qc/veko/chat/client/others/chat software background.png");
 
-
+        //Setting a label to tell the user what to write
         JLabel text = new JLabel("Enter Name : ");
         text.setBounds(50, 500, 1100, 50);
         text.setFont(text.getFont().deriveFont(45f));
         text.setForeground(Color.white);
         add(text);
 
+        //Adding JTextField so user can identify himself
         JTextField textField = new JTextField();
         textField.setFont(textField.getFont().deriveFont(20f));
         textField.setBounds(380, 628, 868, 70);
@@ -32,10 +33,12 @@ public class LoginPanel extends EasyPanel {
         textField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         textField.setForeground(Color.white);
         add(textField);
+        //Adding a listener for when the user has pressed enter
         textField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    //Getting a connection whit the server
                     final Socket clientSocket;
                     final ObjectOutputStream out;
                     final ObjectInputStream in;
@@ -49,8 +52,9 @@ public class LoginPanel extends EasyPanel {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
+                    //Sending The name of the user so the server can identify the user
                     Sockets.getInstance().sendName("Name : " + textField.getText());
-
+                    //Setting the main panel as the chatting panel
                     EasyFrame.getInstance().setPanel(new Panel());
                 }
             }

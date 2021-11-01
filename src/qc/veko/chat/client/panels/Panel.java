@@ -104,6 +104,7 @@ public class Panel extends EasyPanel {
         addTextForNewWindow(contactChosen);
     }
 
+    //Adding text in the chat box that is appropriate for every contact
     public void addTextForNewWindow(String name) {
         chatWindow.setText(name);
         if(contactChosen.equals(""))
@@ -113,6 +114,8 @@ public class Panel extends EasyPanel {
         });
     }
 
+    //Adding text in the chat box that is appropriate for every contact and a verification if the contact chosen is the one selected
+    //by the user
     public void addText(String name, String message) {
         if(contactChosen.equals(""))
             return;
@@ -126,6 +129,7 @@ public class Panel extends EasyPanel {
         return instance;
     }
 
+    //JButton action in one method for easier reading
     private ActionListener buttonAction(JButton button) {
         ActionListener action = new ActionListener() {
             @Override
@@ -152,6 +156,7 @@ public class Panel extends EasyPanel {
         return action;
     }
 
+    //Actualise the panel for when new messages enter
     public void actualise(String message) {
         String uncomposedMessage[] = message.split(":");
         String name = uncomposedMessage[0].replace(" ", "");

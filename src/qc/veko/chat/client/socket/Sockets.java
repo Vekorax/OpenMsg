@@ -31,6 +31,7 @@ public class Sockets extends Thread{
         }
     }
 
+    //Reading messages that server is sending
     private void read() {
         String message = "You are connected! ";
         do {
@@ -44,9 +45,6 @@ public class Sockets extends Thread{
                     EasyFrame.getInstance().setPanel(new Panel());
                 }
                 Panel.getInstance().actualise(message);
-                //Panel.getInstance().addText(message);
-                //ChatPanel.getInstance().message.add(message);
-                //ChatPanel.getInstance().drawText();
             } catch (ClassNotFoundException classNotFoundException) {
 
             } catch (IOException e) {
@@ -64,11 +62,14 @@ public class Sockets extends Thread{
         }
     }
 
+    //Sending message to the server so that it can be sent to another user
     public void send (String msg) {
+        //Starting a thread to send a message
         Thread sender = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    //sending the message (using ObjectOutput to send other thing in the future)
                     out.writeObject(msg + "!" + Panel.getInstance().contactChosen);
                     out.flush();
                 } catch (IOException e) {
@@ -78,28 +79,15 @@ public class Sockets extends Thread{
         });
         sender.start();
     }
+    //Sending your name for authentification (NEED TO BE CHANGE IN THE FUTURE)
     public void sendName (String msg) {
+        //Starting the thread
         Thread sender = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    System.out.println("test");
+                    //Sending the name of the user to the server to finish authentification of the user
                     out.writeObject(msg);
-                    out.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        sender.start();
-    }
-
-    public void askAwaitingMessage() {
-        Thread sender = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    out.writeObject("Awaiting");
                     out.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
