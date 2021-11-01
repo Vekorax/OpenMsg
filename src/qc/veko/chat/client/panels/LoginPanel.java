@@ -16,7 +16,6 @@ import java.net.Socket;
 public class LoginPanel extends EasyPanel {
     public LoginPanel () {
         setLayout(null);
-        //setBackgroundColor(Color.BLACK);
         setBackGroundImage("/qc/veko/chat/client/others/chat software background.png");
 
 
@@ -41,7 +40,7 @@ public class LoginPanel extends EasyPanel {
                     final ObjectOutputStream out;
                     final ObjectInputStream in;
                     try { // 45.140.165.62
-                        clientSocket = new Socket("45.140.165.62", 5000);
+                        clientSocket = new Socket("127.0.0.1", 5000);
                         out = new ObjectOutputStream(clientSocket.getOutputStream());
                         in = new ObjectInputStream(clientSocket.getInputStream());
 
@@ -51,6 +50,7 @@ public class LoginPanel extends EasyPanel {
                         e1.printStackTrace();
                     }
                     Sockets.getInstance().sendName("Name : " + textField.getText());
+
                     EasyFrame.getInstance().setPanel(new Panel());
                 }
             }

@@ -41,7 +41,6 @@ public class Connection extends Thread {
                     name = message.replace("Name : ", "");
                     Server.id.put(name, this);
                     System.out.println(name + " is now Connected !");
-                } else if (message.equals("Awaiting")) {
                     askAwaitingMessage();
                 } else {
                     String msg[] = message.split("!");
@@ -74,7 +73,7 @@ public class Connection extends Thread {
 
     public  void sendMessage(String message) {
         try {
-            output.writeObject("Server - " + message+"\n");
+            output.writeObject(message);
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,11 +96,12 @@ public class Connection extends Thread {
 
     private void askAwaitingMessage() {
         if (Server.awaitingMessages.containsKey(name)) {
-            sendMessage("start");
+            //sendMessage("start");
             Server.awaitingMessages.get(name).forEach(msg -> {
                 sendMessage(msg);
             });
-            sendMessage("end");
+            Server.awaitingMessages.remove(name);
+            //sendMessage("end");
         }
     }
 }

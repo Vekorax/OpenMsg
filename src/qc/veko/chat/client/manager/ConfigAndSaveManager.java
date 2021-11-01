@@ -28,6 +28,8 @@ public class ConfigAndSaveManager {
             if (directoryListing != null) {
                 for (File child : directoryListing) {
                     String id = child.getName().replace(".yml", "");
+                    if (id.equals("contact"))
+                        readContactList();
                     readChatInformations(id);
                 }
             }
@@ -59,8 +61,6 @@ public class ConfigAndSaveManager {
     }
 
     private void readChatInformations(String name) throws IOException {
-        if(name.equals("contact"))
-            return;
         BufferedReader file = new BufferedReader(new FileReader(new File(dataFolder + name + ".yml")));
         String line;
         List<String> messageList = new ArrayList<>();

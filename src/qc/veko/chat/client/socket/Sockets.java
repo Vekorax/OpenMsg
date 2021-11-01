@@ -1,6 +1,7 @@
 package qc.veko.chat.client.socket;
 
 import qc.veko.chat.client.panels.Panel;
+import qc.veko.easyswing.engine.EasyFrame;
 
 import java.io.*;
 import java.net.Socket;
@@ -10,6 +11,8 @@ public class Sockets extends Thread{
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private static Sockets instance;
+
+    private boolean readingAwaitingMessage = false;
 
     public Sockets(Socket clientSocket, ObjectInputStream in, ObjectOutputStream out) {
         instance = this;
@@ -34,6 +37,12 @@ public class Sockets extends Thread{
             try {
                 message = (String) in.readObject();
                 System.out.println(message);
+                if (message.equals("start")) {
+                    // Panel for waiting in message loading
+                }
+                else if (message.equals("stop")) {
+                    EasyFrame.getInstance().setPanel(new Panel());
+                }
                 Panel.getInstance().actualise(message);
                 //Panel.getInstance().addText(message);
                 //ChatPanel.getInstance().message.add(message);
@@ -74,6 +83,7 @@ public class Sockets extends Thread{
             @Override
             public void run() {
                 try {
+                    System.out.println("test");
                     out.writeObject(msg);
                     out.flush();
                 } catch (IOException e) {

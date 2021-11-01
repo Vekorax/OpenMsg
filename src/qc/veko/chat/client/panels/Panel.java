@@ -24,7 +24,6 @@ public class Panel extends EasyPanel {
     public static Map<String, List<String>> message = new HashMap();
 
     public Panel() {
-        Sockets.getInstance().askAwaitingMessage();
         instance = this;
         if (!contact.contains("Add Contact"))
             contact.add("Add Contact");

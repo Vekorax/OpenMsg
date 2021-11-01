@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Chat test:jar">
-    <output-path>$USER_HOME$/Desktop</output-path>
-    <root id="archive" name="server.jar">
-      <element id="module-output" name="Chat test" />
-      <element id="extracted-dir" path="$USER_HOME$/Desktop/EasySwing.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
