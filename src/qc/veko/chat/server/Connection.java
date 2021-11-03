@@ -11,9 +11,10 @@ public class Connection extends Thread {
     private boolean running;
     private String name;
 
+    //init all data for client
     public Connection(Socket client) {
         this.client = client;
-        //running=true;
+        running = true;
         try {
             setupStreams();
             whileListening();
@@ -32,20 +33,27 @@ public class Connection extends Thread {
         }
     }
 
+    //Listening to all things client can be sending
     private void whileListening(){
         String message = "You are connected! ";
         do {
             try {
+                //trying to read a chat message ( only chat message has been done for now)
                 message = (String) input.readObject();
+                //Initialise the authentification ( MUST BE CHANGE )
                 if (message.startsWith("Name : ")) {
                     name = message.replace("Name : ", "");
+                    //Save thread in map to localise the user thread
                     Server.id.put(name, this);
                     System.out.println(name + " is now Connected !");
+                    //Asking for awaiting messages at login
                     askAwaitingMessage();
                 } else {
+                    //Spliting message to know who the message needs to be sent to
                     String msg[] = message.split("!");
                     String receiver = msg[1];
                     System.out.println(name + " : " + msg[0]);
+                    //Send message to the right person
                     Server.send(msg[0], receiver, name);
                 }
             }catch(ClassNotFoundException classNotFoundException){
@@ -57,15 +65,17 @@ public class Connection extends Thread {
     }
 
 
+    //When user disconect
     public void dispose(){
         try {
+            //Close every sockets input, output, etc
             output.close();
             input.close();
             client.close();
-            interrupt();
+            //Stopping the thread and killing it
+            //Stopping it because they're could be some error in killing it
             running = false;
             Server.stopThread(name);
-            //Server.stopThread(name);
         } catch(IOException ioException){
             ioException.printStackTrace();
         }
@@ -99,8 +109,8 @@ public class Connection extends Thread {
             //sendMessage("start");
             Server.awaitingMessages.get(name).forEach(msg -> {
                 sendMessage(msg);
+                Server.awaitingMessages.get(name).remove(msg);
             });
-            Server.awaitingMessages.remove(name);
             //sendMessage("end");
         }
     }

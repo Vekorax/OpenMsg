@@ -1,5 +1,6 @@
 package qc.veko.chat.client.socket;
 
+import qc.veko.chat.client.Chat;
 import qc.veko.chat.client.panels.Panel;
 import qc.veko.easyswing.engine.EasyFrame;
 
@@ -87,8 +88,9 @@ public class Sockets extends Thread{
             public void run() {
                 try {
                     //Sending the name of the user to the server to finish authentification of the user
-                    out.writeObject(msg);
+                    out.writeObject("Name : " + msg);
                     out.flush();
+                    Chat.getInstance().configAndSaveManager.addConfigLine("name", msg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -6,7 +6,7 @@ import qc.veko.easyswing.EasySwing;
 
 import java.io.*;
 
-public class Chat extends EasySwing {
+public class Chat {
     public ConfigAndSaveManager configAndSaveManager = new ConfigAndSaveManager();
     private static Chat instance;
     public static void main( String[] args ){
@@ -19,12 +19,6 @@ public class Chat extends EasySwing {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getFrame().setDefaultPanel(new LoginPanel()).setFrameResolution(1280, 720).setFrameTitle("Your Page Title");
-        /*getFrame().setUndecorated(true);
-        FrameDragListener frameDragListener = new FrameDragListener(getFrame());
-        getFrame().addMouseListener(frameDragListener);
-        getFrame().addMouseMotionListener(frameDragListener);*/
-        launch();
     }
 
     public static Chat getInstance() {

@@ -1,6 +1,7 @@
 package qc.veko.chat.client.panels;
 
 import qc.veko.chat.client.socket.Sockets;
+import qc.veko.chat.client.utils.Utils;
 import qc.veko.easyswing.engine.EasyFrame;
 import qc.veko.easyswing.engine.EasyPanel;
 
@@ -38,22 +39,7 @@ public class LoginPanel extends EasyPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    //Getting a connection whit the server
-                    final Socket clientSocket;
-                    final ObjectOutputStream out;
-                    final ObjectInputStream in;
-                    try { // 45.140.165.62
-                        clientSocket = new Socket("127.0.0.1", 5000);
-                        out = new ObjectOutputStream(clientSocket.getOutputStream());
-                        in = new ObjectInputStream(clientSocket.getInputStream());
-
-                        Runnable connection = new Sockets(clientSocket, in, out);
-                        new Thread(connection).start();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    //Sending The name of the user so the server can identify the user
-                    Sockets.getInstance().sendName("Name : " + textField.getText());
+                    Utils.connectSocketForLogin(textField.getText());
                     //Setting the main panel as the chatting panel
                     EasyFrame.getInstance().setPanel(new Panel());
                 }
